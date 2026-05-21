@@ -5,6 +5,10 @@ import cloudinary.uploader
 
 st.title("Media Platform")
 
+if cursor_obj is None:
+    st.error("Database connection failed. Check your secrets.")
+    st.stop()
+
 cloudinary.config(
     cloud_name=st.secrets["cloud_name"],
     api_key=st.secrets["api_key"],
@@ -53,13 +57,19 @@ def login_function():
         btn = st.form_submit_button("Login")
 
         if btn:
+            if cursor_obj is None:
+                st.error("Database not connected.")
+                return
             query = "select * from users3 where email=%s and password=%s"
             values = (email, password)
             cursor_obj.execute(query, values)
             loggedin_user = cursor_obj.fetchone()
-            st.session_state.user = loggedin_user
-            st.write("logged in successfully")
-            st.rerun()
+            if loggedin_user:
+                st.session_state.user = loggedin_user
+                st.write("logged in successfully")
+                st.rerun()
+            else:
+                st.error("Invalid email or password")
 
 def signup_function():
     st.header("SignUp")
@@ -70,6 +80,9 @@ def signup_function():
         btn = st.form_submit_button("SignUp")
 
         if btn:
+            if cursor_obj is None:
+                st.error("Database not connected.")
+                return
             query = "insert into users3(name,email,password) values(%s,%s,%s)"
             values = (name, email, password)
             cursor_obj.execute(query, values)
