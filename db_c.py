@@ -6,7 +6,9 @@ conn_obj=mysql.connector.connect(
     database=st.secrets["database"],
     port=st.secrets["port"],
     user=st.secrets["user"],
-    password=st.secrets["password"]
+    password=st.secrets["password"],
+    ssl_disabled=False
+
 )
 
 cursor_obj=conn_obj.cursor(dictionary=True)
@@ -35,5 +37,6 @@ CREATE TABLE IF NOT EXISTS files3(
 """)
 
 conn_obj.commit()
+conn_obj.close()
 
 print("Tables Created Successfully")
