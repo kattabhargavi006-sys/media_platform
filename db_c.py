@@ -1,6 +1,9 @@
 import mysql.connector
 import streamlit as st
 
+conn_obj = None
+cursor_obj = None
+
 try:
     conn_obj = mysql.connector.connect(
         host=st.secrets["host"],
@@ -36,7 +39,8 @@ try:
     """)
 
     conn_obj.commit()
-    conn.close()
-
     print("Tables Created Successfully")
+
+except Exception as e:
+    print("DB Connection Failed:", e)
 
