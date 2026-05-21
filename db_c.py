@@ -1,11 +1,8 @@
 import mysql.connector
 import streamlit as st
 
-conn_obj = None
-cursor_obj = None
 
-try:
-    conn_obj = mysql.connector.connect(
+conn_obj = mysql.connector.connect(
         host=st.secrets["host"],
         database=st.secrets["database"],
         port=st.secrets["port"],
@@ -40,7 +37,4 @@ try:
 
     conn_obj.commit()
     print("Tables Created Successfully")
-
-except Exception as e:
-    print("DB Connection Failed:", e)
 
