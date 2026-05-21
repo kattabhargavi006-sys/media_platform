@@ -42,3 +42,5 @@ try:
 
 except mysql.connector.Error as e:
     st.error(f"DB Connection Failed — Error {e.errno}: {e.msg}")
+     conn_obj = None
+    cursor_obj = None
