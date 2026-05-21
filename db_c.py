@@ -38,9 +38,8 @@ try:
     """)
 
     conn_obj.commit()
-    print("Tables Created Successfully")
 
-except mysql.connector.Error as e:
-    st.error(f"DB Connection Failed — Error {e.errno}: {e.msg}")
-     conn_obj = None
+except Exception as e:
+    print(f"FULL ERROR: {e}")
+    conn_obj = None
     cursor_obj = None
